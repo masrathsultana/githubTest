@@ -63,10 +63,6 @@ exports.AdminPage = class AdminPage
         await this.page.locator(this.Password).fill(AdminTestData.UserPassword);
         await this.page.locator(this.ConfirmPassword).fill(AdminTestData.UserConfirmPassword);
         const validation = await this.page.locator(this.UserValidation)
-        /*if(validation.textContent() === "Already exists"){
-            await this.page.locator(this.CancelUserButton).click();  
-            return;
-                 }*/
         await this.page.locator(this.SaveUserButton).click();
         await this.page.waitForTimeout(5000)
     }

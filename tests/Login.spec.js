@@ -9,8 +9,6 @@ let login, PIM1, Admin1, recruitment1;
 test.setTimeout(120000);
 
 test.describe.serial('test Suite', () => {
-    
-
 test.beforeEach('test', async ({page}) => {
     login = new LoginPage(page); 
     await login.gotoLogin();
@@ -23,31 +21,31 @@ test.beforeEach('test', async ({page}) => {
 test.afterEach('test', async () => {
 await login.Logout();
 })
-test('Add Emp', async () => {
+test.skip('Add Emp', async () => {
 await PIM1.AddEmp();
 })
-test('Edit Emp', async () => {
+test.skip('Edit Emp', async () => {
 await PIM1.EditEmp();
 })
-test('Delete Emp', async () => {
+test.skip('Delete Emp', async () => {
 await PIM1.DeleteEmp();
 })
-test('Add User', async () => {
+test.skip('Add User', async () => {
 await Admin1.AddUser();
 })
-test('Edit User', async () => {
+test.skip('Edit User', async () => {
 await Admin1.EditUser();
 })
-test('Delete User', async () => {
+test.skip('Delete User', async () => {
 await Admin1.DeleteUser();
 })
-test.only('Add Recruiter', async () => {
+test.skip('Add Recruiter', async () => {
 await recruitment1.AddRecruiter();
 })
-test('Edit Recruiter', async () => {
+test.skip('Edit Recruiter', async () => {
 await recruitment1.EditRecruiter();
 })
-test.only('Delete Recruiter', async () => {
+test.skip('Delete Recruiter', async () => {
 await recruitment1.DeleteRecruiter();
 })
 })

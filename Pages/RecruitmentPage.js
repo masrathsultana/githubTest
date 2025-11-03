@@ -16,7 +16,17 @@ class RecruitmentPage {
         this.CalanderIcon = "//i[@class='oxd-icon bi-calendar oxd-date-input-icon']";
         this.CurrentMonth1 = "div[class = 'oxd-calendar-selector-month-selected']";
         this.CurrentYear1 = "div[class = 'oxd-calendar-selector-year-selected']";
-        this.BackButtonCal = "//button[@class='oxd-icon-button']//i[@class='oxd-icon bi-chevron-left']"
+        this.BackButtonCal = "//button[@class='oxd-icon-button']//i[@class='oxd-icon bi-chevron-left']";
+        this.CalAllDates = "div[class = 'oxd-calendar-date']";
+        this.RecruiterNotes = "//textarea[@placeholder='Type here']";
+        this.RecruiterSaveButton = "//button[normalize-space()='Save']";
+        this.CandidateNameSearchBox = "//input[@placeholder='Type for hints...']";
+        this.CandidateAllOptions = "div[class = 'oxd-autocomplete-option']"
+        this.SearchButton = "//button[normalize-space()='Search']";
+        this.EditRecruiterButton = "//i[@class='oxd-icon bi-eye-fill']";
+        this.CandidateShortListButton = "//button[normalize-space()='Shortlist']";
+        this.DeleteRecruiterButton = "//i[@class='oxd-icon bi-trash']";
+        this.DeleteAcceptButton = "//button[normalize-space()='Yes, Delete']";
     }
 async AddRecruiter(){
     await this.page.locator(this.RecruitmentLink).click()
@@ -52,7 +62,7 @@ async AddRecruiter(){
         }     
             await this.page.locator(this.BackButtonCal).click();
     }
-       const alldates = await this.page.$$("div[class = 'oxd-calendar-date']"); 
+       const alldates = await this.page.$$(this.CalAllDates); 
        for(const alldate of alldates){
         const alldate1 = await alldate.textContent();
         if(alldate1.includes(Date)){
@@ -60,19 +70,19 @@ async AddRecruiter(){
             break;
         }
        }
-       await this.page.locator("//textarea[@placeholder='Type here']").fill("Good communication skills");
+       await this.page.locator(this.RecruiterNotes).fill("Good communication skills");
        await this.page.waitForTimeout(5000);
-       const savebtn = await this.page.locator("//button[normalize-space()='Save']")
+       const savebtn = await this.page.locator(this.RecruiterSaveButton);
        savebtn.scrollIntoViewIfNeeded();
        await savebtn.click();
     }
     
     async EditRecruiter()
     {
-        await this.page.locator("//span[@class='oxd-text oxd-text--span oxd-main-menu-item--name'][normalize-space()='Recruitment']").click()
-        await this.page.locator("//input[@placeholder='Type for hints...']").fill("Az");
+        await this.page.locator(this.RecruitmentLink).click()
+        await this.page.locator(this.CandidateNameSearchBox).fill("Az");
         await this.page.waitForTimeout(5000);
-        const searchRec = await this.page.$$("div[class = 'oxd-autocomplete-option']");
+        const searchRec = await this.page.$$(this.CandidateAllOptions);
         for(const searchRec1 of searchRec){
             const searchRec2 = await searchRec1.textContent();
             if(searchRec2.includes("Aziza  Almaas")){
@@ -80,21 +90,21 @@ async AddRecruiter(){
                 break;
             }
     }
-    await this.page.locator("//button[normalize-space()='Search']").click();
+    await this.page.locator(this.SearchButton).click();
     await this.page.waitForTimeout(5000);
-    await this.page.locator("//i[@class='oxd-icon bi-eye-fill']").click();
-    await this.page.locator("//button[normalize-space()='Shortlist']").click();
+    await this.page.locator(this.EditRecruiterButton).click();
+    await this.page.locator("").click();
     await this.page.waitForTimeout(5000);
-    await this.page.locator("//textarea[@placeholder='Type here']").fill("Candidate shortlisted");
-    const savebtn2 = await this.page.locator("//button[normalize-space()='Save']")
+    await this.page.locator(this.CandidateShortListButton).fill("Candidate shortlisted");
+    const savebtn2 = await this.page.locator(this.RecruiterSaveButton)
     savebtn2.scrollIntoViewIfNeeded();
     await savebtn2.click();
 }
     async DeleteRecruiter(){
-        await this.page.locator("//span[@class='oxd-text oxd-text--span oxd-main-menu-item--name'][normalize-space()='Recruitment']").click()
-        await this.page.locator("//input[@placeholder='Type for hints...']").fill("Az");
+        await this.page.locator(this.RecruitmentLink).click()
+        await this.page.locator(this.CandidateNameSearchBox).fill("Az");
         await this.page.waitForTimeout(5000);
-        const searchRec = await this.page.$$("div[class = 'oxd-autocomplete-option']");
+        const searchRec = await this.page.$$(this.CandidateAllOptions);
         for(const searchRec1 of searchRec){
             const searchRec2 = await searchRec1.textContent();
             if(searchRec2.includes("Aziza  Almaas")){
@@ -102,14 +112,14 @@ async AddRecruiter(){
                 break;
             }
     }
-    await this.page.locator("//button[normalize-space()='Search']").click();
+    await this.page.locator(this.SearchButton).click();
     await this.page.waitForTimeout(5000);
     await this.page.on("dialog", async(dialog)=>{
         if (dialog.type() === 'confirm') await dialog.accept();
     })
-    await this.page.locator("//i[@class='oxd-icon bi-trash']").click();
+    await this.page.locator(this.DeleteRecruiterButton).click();
     await this.page.waitForTimeout(5000);
-    await this.page.locator("//button[normalize-space()='Yes, Delete']").click();
+    await this.page.locator(this.DeleteAcceptButton).click();
         }
 }
 
