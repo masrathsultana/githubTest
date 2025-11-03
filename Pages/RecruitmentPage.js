@@ -1,3 +1,4 @@
+import RecruiterData from './RecruiterData.json' assert { type: 'json' };
 
 exports.RecruitmentPage = 
 class RecruitmentPage {
@@ -7,7 +8,7 @@ class RecruitmentPage {
         this.AddRecruiterButton = "//button[normalize-space()='Add']";
         this.RecruiterFirstName = "//input[@placeholder='First Name']";
         this.RecruiterLastName = "//input[@placeholder='Last Name']";
-        this.vacancyDropdown = "div[class = 'oxd-select-text--after']";
+        this.vacancyDropdown = "//i[@class='oxd-icon bi-caret-down-fill oxd-select-text--arrow']";
         this.vacancyAllOptions = "div[class = 'oxd-select-option']";
         this.RecruiterEmail = "//div[3]//div[1]//div[1]//div[1]//div[2]//input[1]";
         this.RecruiterPhone = "//body/div[@id='app']/div[@class='oxd-layout orangehrm-upgrade-layout']/div[@class='oxd-layout-container']/div[@class='oxd-layout-context']/div[@class='orangehrm-background-container orangehrm-save-candidate-page']/div[@class='orangehrm-card-container']/form[@class='oxd-form']/div[@class='oxd-form-row']/div[@class='oxd-grid-3 orangehrm-full-width-grid']/div[2]/div[1]/div[2]/input[1]";
@@ -25,14 +26,15 @@ class RecruitmentPage {
         this.SearchButton = "//button[normalize-space()='Search']";
         this.EditRecruiterButton = "//i[@class='oxd-icon bi-eye-fill']";
         this.CandidateShortListButton = "//button[normalize-space()='Shortlist']";
+        this.RecruiterTextArea = "//textarea[@placeholder='Type here']"
         this.DeleteRecruiterButton = "//i[@class='oxd-icon bi-trash']";
         this.DeleteAcceptButton = "//button[normalize-space()='Yes, Delete']";
     }
 async AddRecruiter(){
     await this.page.locator(this.RecruitmentLink).click()
     await this.page.locator(this.AddRecruiterButton).click();
-    await this.page.locator(this.RecruiterFirstName).fill("Aziza");
-    await this.page.locator(this.RecruiterLastName).fill("Almaas");
+    await this.page.locator(this.RecruiterFirstName).fill(RecruiterData.RecruiterFirstNameData);
+    await this.page.locator(this.RecruiterLastName).fill(RecruiterData.RecruiterLastNameData);
     await this.page.locator(this.vacancyDropdown).click();
     await this.page.waitForTimeout(5000);
     const vacancy = await this.page.$$(this.vacancyAllOptions);
@@ -43,14 +45,14 @@ async AddRecruiter(){
             break;  
         }
     }
-    await this.page.locator(this.RecruiterEmail).fill("masrath12@gmail.com");
-    await this.page.locator(this.RecruiterPhone).fill("9876543210");
+    await this.page.locator(this.RecruiterEmail).fill(RecruiterData.RecruiterEmailData);
+    await this.page.locator(this.RecruiterPhone).fill(RecruiterData.RecruiterPhoneData);
     const uploadFile1 = await this.page.locator(this.UploadFileLink);
     await uploadFile1.setInputFiles('C:/Users/masrath.s/Documents/masrathplay.pdf');
     await this.page.locator(this.RecruiterExtraInfo).fill("test automation");
-    const Year = '2023';  
-    const Month = 'May';
-    const Date = '15';
+    const Year = RecruiterData.RecruiterYear;  
+    const Month = RecruiterData.RecruiterMonth;
+    const Date = RecruiterData.RecruiterDate;
     const cal = await this.page.locator(this.CalanderIcon);
     await cal.scrollIntoViewIfNeeded();
     await cal.click();
@@ -70,7 +72,7 @@ async AddRecruiter(){
             break;
         }
        }
-       await this.page.locator(this.RecruiterNotes).fill("Good communication skills");
+       await this.page.locator(this.RecruiterNotes).fill(RecruiterData.RecruiterNotesData);
        await this.page.waitForTimeout(5000);
        const savebtn = await this.page.locator(this.RecruiterSaveButton);
        savebtn.scrollIntoViewIfNeeded();
@@ -80,12 +82,12 @@ async AddRecruiter(){
     async EditRecruiter()
     {
         await this.page.locator(this.RecruitmentLink).click()
-        await this.page.locator(this.CandidateNameSearchBox).fill("Az");
+        await this.page.locator(this.CandidateNameSearchBox).fill(RecruiterData.RecruiterSearchName);
         await this.page.waitForTimeout(5000);
         const searchRec = await this.page.$$(this.CandidateAllOptions);
         for(const searchRec1 of searchRec){
             const searchRec2 = await searchRec1.textContent();
-            if(searchRec2.includes("Aziza  Almaas")){
+            if(searchRec2.includes(RecruiterData.RecruiterName)){
                 await searchRec1.click();
                 break;
             }
@@ -93,21 +95,21 @@ async AddRecruiter(){
     await this.page.locator(this.SearchButton).click();
     await this.page.waitForTimeout(5000);
     await this.page.locator(this.EditRecruiterButton).click();
-    await this.page.locator("").click();
+    await this.page.locator(this.CandidateShortListButton).click();
     await this.page.waitForTimeout(5000);
-    await this.page.locator(this.CandidateShortListButton).fill("Candidate shortlisted");
+    await this.page.locator(this.RecruiterTextArea).fill(RecruiterData.RecruiterTextAreaInfo);
     const savebtn2 = await this.page.locator(this.RecruiterSaveButton)
     savebtn2.scrollIntoViewIfNeeded();
     await savebtn2.click();
 }
     async DeleteRecruiter(){
         await this.page.locator(this.RecruitmentLink).click()
-        await this.page.locator(this.CandidateNameSearchBox).fill("Az");
+        await this.page.locator(this.CandidateNameSearchBox).fill(RecruiterData.RecruiterSearchName);
         await this.page.waitForTimeout(5000);
         const searchRec = await this.page.$$(this.CandidateAllOptions);
         for(const searchRec1 of searchRec){
             const searchRec2 = await searchRec1.textContent();
-            if(searchRec2.includes("Aziza  Almaas")){
+            if(searchRec2.includes(RecruiterData.RecruiterName)){
                 await searchRec1.click();
                 break;
             }

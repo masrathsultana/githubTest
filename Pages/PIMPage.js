@@ -111,33 +111,13 @@ class PIMPage
         await this.page.locator(this.PIMlink).click();
         await this.page.locator(this.EmpIDSearch).fill(PIMTestData.EmpId);
         await this.page.locator(this.EditSearchButton).click();
-        // register native dialog handler just in case this is a real browser confirm()
-        const nativeDialogHandler = async dialog => {
-            try {
-               // console.log('native dialog:', dialog.type(), dialog.message());
-                if (dialog.type() === 'confirm') await dialog.accept();
-                else await dialog.dismiss();
-            } catch (e) { /* ignore handler errors */ }
-        };
-        this.page.on('dialog', nativeDialogHandler);
-
-        // click the delete control — click the button that contains the trash icon (more reliable than clicking the <i>)
+       await this.page.on("dialog", async(dialog)=>{
+        if (dialog.type() === 'confirm') await dialog.accept();
+    })
         const trashButton = this.page.locator(this.DeleteButton).first();
         await trashButton.click();
-
-        // If the app uses an in-page modal, wait for its confirm button and click it.
-        // Try some common label texts — adjust the XPath to match the actual modal button text in your app.
-        const confirmModalButton = this.page.locator(this.ConfirmButton);
-        try {
-            await confirmModalButton.waitFor({ state: 'visible', timeout: 3000 });
-            await confirmModalButton.click();
-        } catch (e) {
-            // no in-page modal found within timeout — native dialog handler should have handled it if present
-        }
-        // small wait to let deletion complete, then remove the dialog handler
-        await this.page.waitForTimeout(2000);
-        this.page.off('dialog', nativeDialogHandler);
-        // optional: verify deletion by asserting the search results or absence of the employee row
+        await this.page.waitForTimeout(5000);
+        await this.page.locator(this.ConfirmButton).click();
     }
     }
 

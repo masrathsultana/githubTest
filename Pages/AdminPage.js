@@ -77,7 +77,7 @@ exports.AdminPage = class AdminPage
 
         await this.page.locator(this.ChangePasswordCheckbox).click();
         await this.page.locator(this.ChangeUserPassword).fill(AdminTestData.UserNewPassword);
-        await this.page.locator(this.ConfirmUserPassword).fill(AdminTestData.UserConfirmPassword);
+        await this.page.locator(this.ConfirmUserPassword).fill(AdminTestData.UserNewConfirmPassword);
         await this.page.waitForTimeout(5000);
         const saveBtn = this.page.locator(this.SaveUserButton);
         await saveBtn.waitFor({ state: 'visible', timeout: 5000 });
@@ -88,32 +88,15 @@ exports.AdminPage = class AdminPage
         await this.page.locator(this.UserSearchBox).fill(AdminTestData.UserAddName)
         await this.page.locator(this.AdvSearchButton).click();
          await this.page.waitForTimeout(5000);
-        // register native dialog handler just in case this is a real browser confirm()
-        const nativeDialogHandler = async dialog => {
-            try {
-               // console.log('native dialog:', dialog.type(), dialog.message());
-                if (dialog.type() === 'confirm') await dialog.accept();
-                else await dialog.dismiss();
-            } catch (e) { /* ignore handler errors */ }
-        };
-        this.page.on('dialog', nativeDialogHandler);
+        await this.page.on("dialog", async(dialog)=>{
 
-        // click the delete control — click the button that contains the trash icon (more reliable than clicking the <i>)
+        if (dialog.type() === 'confirm') await dialog.accept();
+    })
         const trashButton = this.page.locator(this.DeletButton).first();
         await trashButton.click();
-        // If the app uses an in-page modal, wait for its confirm button and click it.
-        // Try some common label texts — adjust the XPath to match the actual modal button text in your app.
-        const confirmModalButton = this.page.locator(this.ConfirmationModalYesButton);
-        try {
-            await confirmModalButton.waitFor({ state: 'visible', timeout: 3000 });
-            await confirmModalButton.click();
-        } catch (e) {
-            // no in-page modal found within timeout — native dialog handler should have handled it if present
-        }
-        // small wait to let deletion complete, then remove the dialog handler
-        await this.page.waitForTimeout(2000);
-        this.page.off('dialog', nativeDialogHandler);
-        // optional: verify deletion by asserting the search results or absence of the employee row
+        await this.page.waitForTimeout(5000);
+       await this.page.locator(this.ConfirmationModalYesButton).click();     
+
     }
 
     }

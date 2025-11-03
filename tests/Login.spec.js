@@ -30,13 +30,13 @@ await PIM1.EditEmp();
 test.skip('Delete Emp', async () => {
 await PIM1.DeleteEmp();
 })
-test.skip('Add User', async () => {
+test('Add User', async () => {
 await Admin1.AddUser();
 })
-test.skip('Edit User', async () => {
+test('Edit User', async () => {
 await Admin1.EditUser();
 })
-test.skip('Delete User', async () => {
+test('Delete User', async () => {
 await Admin1.DeleteUser();
 })
 test.skip('Add Recruiter', async () => {
