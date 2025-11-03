@@ -1,0 +1,12 @@
+{
+    "UserRole": "Admin",
+    "UserRoleFill": "Jo",
+    "UserName": "John  Doe",
+    "UserStatus": "Enabled",
+    "UserAddName" : "Masrath555",
+    "UserPassword" : "Masrath@123",
+    "UserConfirmPassword" : "Masrath@123",
+    "UserNewPassword" : "Masrath@1234", 
+    "UserNewConfirmPassword" : "Masrath@1234"
+
+}
