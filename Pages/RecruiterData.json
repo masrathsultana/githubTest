@@ -1,6 +1,6 @@
 {
     "RecruiterFirstNameData": "mohd",
-    "RecruiterLastNameData": "Almaas",  
+    "RecruiterLastNameData": "Almaas888",  
     "RecruiterEmailData": "masrath12@gmail.com",
     "RecruiterPhoneData": "9876543210" , 
     "RecruiterYear" : "2024",
@@ -8,7 +8,9 @@
     "RecruiterDay" : "15",
     "RecruiterNotesData": "Good communication skills" ,
     "RecruiterSearchName": "mo" ,
-    "RecruiterName": "mohd  Almaas",
-    "RecruiterTextAreaInfo": "Candidate shortlisted"
+    "RecruiterName": "mohd  Almaas111",
+    "RecruiterTextAreaInfo": "Candidate shortlisted",
+    "RecruiterPosition" : "Junior Account Assistant",
+    "RecruiterExtraInfo" : "test automation"
 
 }

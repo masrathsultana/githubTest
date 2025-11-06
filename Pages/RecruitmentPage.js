@@ -29,27 +29,50 @@ class RecruitmentPage {
         this.RecruiterTextArea = "//textarea[@placeholder='Type here']"
         this.DeleteRecruiterButton = "//i[@class='oxd-icon bi-trash']";
         this.DeleteAcceptButton = "//button[normalize-space()='Yes, Delete']";
+        this.FirstNameValidation = "//body[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/form[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/span[1]"
+        this.LastNameValidation = "//body[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/form[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[3]/span[1]"
+        this.EmailValidation = "//div[@class='oxd-grid-3 orangehrm-full-width-grid']//span[@class='oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message'][normalize-space()='Required']"
     }
 async AddRecruiter(){
     await this.page.locator(this.RecruitmentLink).click()
     await this.page.locator(this.AddRecruiterButton).click();
+    const savebtn = await this.page.locator(this.RecruiterSaveButton);
+    savebtn.scrollIntoViewIfNeeded();
+    await savebtn.click();
+    const validationFirstName = await this.page.locator(this.FirstNameValidation);
+    const valtext1 = await validationFirstName.textContent();
+    if(valtext1.includes('Required'))
+    await this.page.waitForTimeout(5000);
     await this.page.locator(this.RecruiterFirstName).fill(RecruiterData.RecruiterFirstNameData);
+    const savebtn2 = await this.page.locator(this.RecruiterSaveButton);
+    savebtn2.scrollIntoViewIfNeeded();
+    await savebtn2.click();
+    const validationLastName = await this.page.locator(this.LastNameValidation)
+    const valtext2 = await validationLastName.textContent();
+    if(valtext2.includes('Required'))
     await this.page.locator(this.RecruiterLastName).fill(RecruiterData.RecruiterLastNameData);
     await this.page.locator(this.vacancyDropdown).click();
-    await this.page.waitForTimeout(5000);
     const vacancy = await this.page.$$(this.vacancyAllOptions);
     for(const vac of vacancy){
         const vac1 =await vac.textContent();
-        if(vac1.includes("Junior Account Assistant")){
+        if(vac1.includes(RecruiterData.RecruiterPosition)){
             await vac.click();
             break;  
         }
     }
+    const savebtn3 = await this.page.locator(this.RecruiterSaveButton);
+    savebtn3.scrollIntoViewIfNeeded();
+    await savebtn3.click();
+    const validationEmail = await this.page.locator(this.EmailValidation);
+    const valtext3 = await validationEmail.textContent();
+    if(valtext3.includes('Required'))
     await this.page.locator(this.RecruiterEmail).fill(RecruiterData.RecruiterEmailData);
     await this.page.locator(this.RecruiterPhone).fill(RecruiterData.RecruiterPhoneData);
-    const uploadFile1 = await this.page.locator(this.UploadFileLink);
-    await uploadFile1.setInputFiles('C:/Users/masrath.s/Documents/masrathplay.pdf');
-    await this.page.locator(this.RecruiterExtraInfo).fill("test automation");
+    const uploadFile1 = await this.page.locator("input[type = 'file']"); 
+    await uploadFile1.waitFor({state : 'attached'});
+    await uploadFile1.setInputFiles('Pages\\TestFiles\\masrathplay.pdf');
+    await this.page.waitForTimeout(5000);
+    await this.page.locator(this.RecruiterExtraInfo).fill(RecruiterData.RecruiterExtraInfo);
     const Year = RecruiterData.RecruiterYear;  
     const Month = RecruiterData.RecruiterMonth;
     const Date = RecruiterData.RecruiterDate;
@@ -74,7 +97,7 @@ async AddRecruiter(){
        }
        await this.page.locator(this.RecruiterNotes).fill(RecruiterData.RecruiterNotesData);
        await this.page.waitForTimeout(5000);
-       const savebtn = await this.page.locator(this.RecruiterSaveButton);
+       await this.page.locator(this.RecruiterSaveButton);
        savebtn.scrollIntoViewIfNeeded();
        await savebtn.click();
     }

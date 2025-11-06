@@ -39,7 +39,7 @@ await Admin1.EditUser();
 test('Delete User@User', async () => {
 await Admin1.DeleteUser();
 })
-test('Add Recruiter@Recruiter', async () => {
+test.only('Add Recruiter@Recruiter', async () => {
 await recruitment1.AddRecruiter();
 })
 test('Edit Recruiter@Recruiter', async () => {
