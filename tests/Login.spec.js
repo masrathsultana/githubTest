@@ -21,31 +21,31 @@ test.beforeEach('test', async ({page}) => {
 test.afterEach('test', async () => {
 await login.Logout();
 })
-test.skip('Add Emp', async () => {
+test('Add Emp@Employee', async () => {
 await PIM1.AddEmp();
 })
-test.skip('Edit Emp', async () => {
+test('Edit Emp@Employee', async () => {
 await PIM1.EditEmp();
 })
-test.skip('Delete Emp', async () => {
+test('Delete Emp@Employee', async () => {
 await PIM1.DeleteEmp();
 })
-test('Add User', async () => {
+test('Add User@User', async () => {
 await Admin1.AddUser();
 })
-test('Edit User', async () => {
+test('Edit User@User', async () => {
 await Admin1.EditUser();
 })
-test('Delete User', async () => {
+test('Delete User@User', async () => {
 await Admin1.DeleteUser();
 })
-test.skip('Add Recruiter', async () => {
+test('Add Recruiter@Recruiter', async () => {
 await recruitment1.AddRecruiter();
 })
-test.skip('Edit Recruiter', async () => {
+test('Edit Recruiter@Recruiter', async () => {
 await recruitment1.EditRecruiter();
 })
-test.skip('Delete Recruiter', async () => {
+test('Delete Recruiter@Recruiter', async () => {
 await recruitment1.DeleteRecruiter();
 })
 })
