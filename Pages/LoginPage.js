@@ -3,14 +3,14 @@ exports.LoginPage = class LoginPage
 
     constructor(page){
         this.page = page;
-        this.url = 'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login'
+        //this.url = 'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login'
         this.usernamexpath = "input[name = 'username']"
         this.passwordxpath = "input[name = 'password']"
         this.buttonxpath = "button[class = 'oxd-button oxd-button--medium oxd-button--main orangehrm-login-button']"
     }
     async gotoLogin()
     {
-    await this.page.goto(this.url);
+    `await page.goto('/')`
     }
    async Login(username, password)
     {
